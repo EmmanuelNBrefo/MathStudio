@@ -1,10 +1,12 @@
-import Layout from "./components/layout/Layout";
+import SymbolLibrary from "./components/symbols/SymbolLibrary";
 
 
 function App() {
 
   return (
-    <Layout />
+
+    <SymbolLibrary />
+
   );
 
 }
