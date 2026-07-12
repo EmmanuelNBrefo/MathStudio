@@ -10,6 +10,10 @@ const Header = () => {
       <div className="text-sm">
         Professional Mathematics Authoring System
       </div>
+
+      <div className="text-sm">
+        v0.2.0
+      </div>
     </header>
   );
 };
