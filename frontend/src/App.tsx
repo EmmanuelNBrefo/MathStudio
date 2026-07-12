@@ -3,6 +3,7 @@ import Ribbon from "./components/layout/Ribbon";
 import Sidebar from "./components/layout/Sidebar";
 import Workspace from "./components/layout/Workspace";
 import RightPanel from "./components/layout/RightPanel";
+import StatusBar from "./components/layout/StatusBar";
 
 
 function App() {
@@ -10,6 +11,7 @@ function App() {
   return (
 
     <div className="min-h-screen flex flex-col">
+
 
       <Header />
 
@@ -25,6 +27,9 @@ function App() {
         <RightPanel />
 
       </div>
+
+
+      <StatusBar />
 
 
     </div>
