@@ -1,11 +1,11 @@
-import EquationEditor from "./components/equation/EquationEditor";
+import Layout from "./components/layout/Layout";
 
 
 function App(){
 
   return (
 
-    <EquationEditor />
+    <Layout />
 
   );
 
