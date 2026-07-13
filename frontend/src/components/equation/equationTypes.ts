@@ -2,11 +2,12 @@ export type EquationElementType =
   | "number"
   | "variable"
   | "operator"
+  | "symbol"
   | "fraction"
   | "superscript"
   | "subscript"
   | "root"
-  | "symbol";
+  | "matrix";
 
 
 export interface EquationElement {
@@ -15,9 +16,25 @@ export interface EquationElement {
 
   type: EquationElementType;
 
-  value: string;
+  value?: string;
+
 
   children?: EquationElement[];
+
+
+  properties?: {
+
+    numerator?: string;
+
+    denominator?: string;
+
+    base?: string;
+
+    exponent?: string;
+
+    degree?: string;
+
+  };
 
 }
 
