@@ -1,79 +1,45 @@
 import React from "react";
-
+import type { EquationElement } from "./equationTypes";
 
 interface FormulaToolbarProps {
-
-  onInsert: (value: string) => void;
-
+  onInsert: (element: EquationElement) => void;
 }
 
+const buttonClass = `
+  px-4
+  py-2
+  bg-white
+  border
+  border-slate-300
+  rounded-md
+  shadow-sm
+  hover:bg-slate-100
+  hover:border-blue-500
+  transition
+  cursor-pointer
+  text-sm
+  font-medium
+`;
 
-const FormulaToolbar = ({
-  onInsert
-}: FormulaToolbarProps) => {
+const FormulaToolbar = ({ onInsert }: FormulaToolbarProps) => {
 
-
-  const tools = [
-
-    {
-      label: "+",
-      value: "+"
-    },
-
-    {
-      label: "−",
-      value: "-"
-    },
-
-    {
-      label: "×",
-      value: "×"
-    },
-
-    {
-      label: "÷",
-      value: "÷"
-    },
-
-    {
-      label: "√",
-      value: "√"
-    },
-
-    {
-      label: "x²",
-      value: "^2"
-    },
-
-    {
-      label: "x₁",
-      value: "_1"
-    },
-
-    {
-      label: "∑",
-      value: "∑"
-    },
-
-    {
-      label: "∫",
-      value: "∫"
-    },
-
-    {
-      label: "π",
-      value: "π"
-    }
-
-  ];
-
-
+  const createElement = (
+    type: EquationElement["type"],
+    value?: string,
+    properties?: EquationElement["properties"]
+  ): EquationElement => ({
+    id: crypto.randomUUID(),
+    type,
+    value,
+    properties,
+  });
 
   return (
 
     <div
       className="
         flex
+        flex-wrap
         gap-2
         p-3
         bg-white
@@ -82,43 +48,113 @@ const FormulaToolbar = ({
       "
     >
 
-      {
-        tools.map((tool) => (
+      <button
+        className={buttonClass}
+        onClick={() =>
+          onInsert(createElement("operator", "+"))
+        }
+      >
+        +
+      </button>
 
-          <button
+      <button
+        className={buttonClass}
+        onClick={() =>
+          onInsert(createElement("operator", "−"))
+        }
+      >
+        −
+      </button>
 
-            key={tool.label}
+      <button
+        className={buttonClass}
+        onClick={() =>
+          onInsert(createElement("operator", "×"))
+        }
+      >
+        ×
+      </button>
 
-            onClick={() =>
-              onInsert(tool.value)
-            }
+      <button
+        className={buttonClass}
+        onClick={() =>
+          onInsert(createElement("operator", "÷"))
+        }
+      >
+        ÷
+      </button>
 
-            className="
-              w-10
-              h-10
-              rounded-lg
-              border
-              bg-slate-50
-              hover:bg-blue-100
-              text-lg
-              font-semibold
-            "
+      <button
+        className={buttonClass}
+        onClick={() =>
+          onInsert(
+            createElement("fraction", undefined, {
+              numerator: "a",
+              denominator: "b",
+            })
+          )
+        }
+      >
+        a/b
+      </button>
 
-          >
+      <button
+        className={buttonClass}
+        onClick={() =>
+          onInsert(
+            createElement("superscript", undefined, {
+              base: "x",
+              exponent: "2",
+            })
+          )
+        }
+      >
+        x²
+      </button>
 
-            {tool.label}
+      <button
+        className={buttonClass}
+        onClick={() =>
+          onInsert(
+            createElement("subscript", undefined, {
+              base: "x",
+              subscript: "1",
+            })
+          )
+        }
+      >
+        x₁
+      </button>
 
-          </button>
+      <button
+        className={buttonClass}
+        onClick={() =>
+          onInsert(
+            createElement("root", undefined, {
+              degree: "2",
+              value: "x",
+            })
+          )
+        }
+      >
+        √
+      </button>
 
-        ))
-      }
-
+      <button
+        className={buttonClass}
+        onClick={() =>
+          onInsert(
+            createElement("matrix")
+          )
+        }
+      >
+        Matrix
+      </button>
 
     </div>
 
   );
 
 };
-
 
 export default FormulaToolbar;

@@ -3,14 +3,18 @@ import React, { useState } from "react";
 import FormulaToolbar from "./FormulaToolbar";
 import FormulaBlock from "./FormulaBlock";
 
+import Fraction from "./Fraction";
+import Superscript from "./Superscript";
+import Subscript from "./Subscript";
+import Root from "./Root";
+import Matrix from "./Matrix";
+
 import type {
   EquationElement
 } from "./equationTypes";
 
 
-
 const EquationEditor = () => {
-
 
   const [elements, setElements] =
     useState<EquationElement[]>([]);
@@ -18,27 +22,80 @@ const EquationEditor = () => {
 
 
   const insertFormula = (
-    value: string
+    element: EquationElement
   ) => {
 
-
-    const newElement: EquationElement = {
-
-      id:
-        Date.now().toString(),
-
-      type:
-        "symbol",
-
-      value
-
-    };
-
-
-    setElements([
-      ...elements,
-      newElement
+    setElements((previous) => [
+      ...previous,
+      element
     ]);
+
+  };
+
+
+
+  const renderElement = (
+    element: EquationElement
+  ) => {
+
+    switch(element.type) {
+
+      case "fraction":
+
+        return (
+          <Fraction
+            numerator={element.properties?.numerator}
+            denominator={element.properties?.denominator}
+          />
+        );
+
+
+      case "superscript":
+
+        return (
+          <Superscript
+            base={element.properties?.base}
+            exponent={element.properties?.exponent}
+          />
+        );
+
+
+      case "subscript":
+
+        return (
+          <Subscript
+            base={element.properties?.base}
+            subscript={element.properties?.subscript}
+          />
+        );
+
+
+      case "root":
+
+        return (
+          <Root
+            value={element.properties?.value}
+            degree={element.properties?.degree}
+          />
+        );
+
+
+      case "matrix":
+
+        return (
+          <Matrix />
+        );
+
+
+      default:
+
+        return (
+          <FormulaBlock
+            element={element}
+          />
+        );
+
+    }
 
   };
 
@@ -46,43 +103,43 @@ const EquationEditor = () => {
 
   return (
 
-    <div className="
-      h-full
-      flex
-      flex-col
-      bg-slate-100
-    ">
-
+    <div
+      className="
+        h-full
+        min-h-screen
+        flex
+        flex-col
+        bg-slate-100
+      "
+    >
 
       <FormulaToolbar
-
         onInsert={insertFormula}
-
       />
 
 
-
-      <div className="
-        flex-1
-        p-8
-        bg-white
-        m-4
-        rounded-xl
-        shadow
-        flex
-        items-center
-        justify-center
-      ">
-
+      <div
+        className="
+          flex-1
+          p-8
+          bg-white
+          m-4
+          rounded-xl
+          shadow
+          overflow-auto
+        "
+      >
 
         {
           elements.length === 0 ?
 
           (
 
-            <p className="
-              text-gray-400
-            ">
+            <p
+              className="
+                text-gray-400
+              "
+            >
               Start creating your equation...
             </p>
 
@@ -92,23 +149,25 @@ const EquationEditor = () => {
 
           (
 
-            <div>
+            <div
+              className="
+                flex
+                gap-3
+                items-center
+              "
+            >
 
               {
                 elements.map(
                   (element) => (
 
-                    <FormulaBlock
-
-                      key={
-                        element.id
+                    <div
+                      key={element.id}
+                    >
+                      {
+                        renderElement(element)
                       }
-
-                      element={
-                        element
-                      }
-
-                    />
+                    </div>
 
                   )
                 )
@@ -119,7 +178,6 @@ const EquationEditor = () => {
           )
 
         }
-
 
       </div>
 
