@@ -1,10 +1,12 @@
-import Layout from "./components/layout/Layout";
+import EquationEditor from "./components/equation/EquationEditor";
 
 
-function App() {
+function App(){
 
   return (
-    <Layout />
+
+    <EquationEditor />
+
   );
 
 }
